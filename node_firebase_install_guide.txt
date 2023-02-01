@@ -1,0 +1,8 @@
+sudo npm install -g firebase-tools
+sudo npm install firebase
+sudo firebase login
+sudo firebase init
+npm install express
+npm run serve
+
+
