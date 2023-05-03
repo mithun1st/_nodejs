@@ -18,7 +18,6 @@ const port = 2222;
 console.log('run');
 
 
-
 class Students {
     constructor(id, name, result, roll, isMale) {
         this.id = id,
@@ -28,6 +27,8 @@ class Students {
             this.isMale = isMale
     };
 }
+
+let studentObj = new Students(1, "xyz", 4.2, 12, false);
 let list = Array();
 
 
@@ -39,19 +40,22 @@ app.get('/', (req, res) => {
 
 //test
 app.get('/test', (req, res) => {
-    console.log(req.query.p1);
-    console.log(req.query.p2);
+    console.log(req.query);
     console.log(req.body);
-    return res.status(200).send(JSON.stringify(req.body)+req.query.p1+req.query.p2);
+    res.status(210);
+    return send(req.query.p1 + "\n" + req.query.p2 + "\n" + JSON.stringify(req.body));
 });
 
+
+//---------------------------
 
 //create
 app.post('/create', (req, res) => {
 
-    list.push(req.body);
+    list.push(new Students(req.body.id, req.body.name, req.body.result, req.body.roll, req.body.isMale));
 
-    let data = { 'status': "success", "numOfData": list.length };
+    let data = { 'status': true, "numOfData": list.length };
+
     res.status(201);
     return res.send(JSON.stringify(data));
 });
@@ -60,14 +64,10 @@ app.post('/create', (req, res) => {
 //read
 app.get('/read', (req, res) => {
     let id = req.query.id
-
     let stu = list.find((e) => e.id == id);
-
-
-
-    if (list.findIndex((e)=>e.id==id)==-1) {
+    if (list.findIndex((e) => e.id == id) == -1) {
         res.status(400);
-        return res.send(JSON.stringify({ "status": 'not found' }));
+        return res.send(JSON.stringify({ "status": false }));
     }
     res.status(201);
     return res.send(JSON.stringify(stu));
@@ -76,9 +76,6 @@ app.get('/read', (req, res) => {
 
 //read all
 app.get('/read-all', (req, res) => {
-
-    
-
     res.status(201);
     return res.send(JSON.stringify(list));
 });
@@ -89,13 +86,13 @@ app.put('/update', (req, res) => {
 
     let index = list.findIndex((e) => e.id == id);
     list[index] = req.body;
-    
-    if (list.findIndex((e)=>e.id==id)==-1) {
+
+    if (list.findIndex((e) => e.id == id) == -1) {
         res.status(400);
-        return res.send(JSON.stringify({ "status": 'not found' }));
+        return res.send(JSON.stringify({ "status": false }));
     }
     res.status(201);
-    return res.send(JSON.stringify({ "status": 'success' }));
+    return res.send(JSON.stringify({ "status": true }));
 });
 
 
@@ -106,20 +103,19 @@ app.delete('/delete', (req, res) => {
     let index = list.findIndex((e) => e.id == id);
     list.splice(index, 1);
 
-    if (list.findIndex((e)=>e.id==id)==-1) {
+    if (list.findIndex((e) => e.id == id) == -1) {
         res.status(400);
-        return res.send(JSON.stringify({ "status": 'not found' }));
+        return res.send(JSON.stringify({ "status": false }));
     }
     res.status(201);
-    return res.send(JSON.stringify({ "status": 'success' }));
+    return res.send(JSON.stringify({ "status": true }));
 });
 
 //delete all
 app.delete('/delete-all', (req, res) => {
     list.splice(0, list.length);
-    
     res.status(201);
-    return res.send(JSON.stringify({ "status": 'success' }));
+    return res.send(JSON.stringify({ "status": true }));
 });
 
 
