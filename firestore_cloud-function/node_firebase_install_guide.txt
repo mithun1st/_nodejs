@@ -1,0 +1,10 @@
+
+>>firebase logout
+>>firebase login
+>>firebase init
+//select fnc>y>project>
+//copy code from /index.js and past /function/index.js
+//delete /index.js and /node_modules
+exports.myapp=functions.https.onRequest(app);
+>>npm install -g firebase-tools
+>>firebase deploy
