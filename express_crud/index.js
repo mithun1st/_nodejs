@@ -43,7 +43,7 @@ app.get("/page/test", (req, res) => {
     console.log(req.body);
     console.log(req.headers);
     res.status(210);
-    return res.send(req.query.p1 + "\n" + req.query.p2 + "\n sum=" + fnc.add(parseInt(req.query.p1), parseInt(req.query.p2)) + "\n" + JSON.stringify(req.body) + "\n" + JSON.stringify(req.headers));
+    return res.send(req.query.p1 + "\n" + req.query.p2 + "\nsum=" + fnc.add(parseInt(req.query.p1), parseInt(req.query.p2)) + "\n" + JSON.stringify(req.body) + "\n" + JSON.stringify(req.headers));
 });
 
 //#####################CRUD OPERATION####################
